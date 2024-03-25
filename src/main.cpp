@@ -53,20 +53,30 @@ Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS); // Inici
 
 IRsend irsend; // Criação do objeto para envio de comandos IR
 
-// Definições de armazenamento em EEPROM para códigos de teclas da TV
-EEPROMStorage<int> tamanhoCode(0, 999);               // 2 + 1 = 3 bytes
-EEPROMStorage<unsigned long> tecla1(3, 999);          // 4 + 1 = 5 bytes
-EEPROMStorage<unsigned long> tecla2(8, 999);          // 4 + 1 = 5 bytes
-EEPROMStorage<unsigned long> tecla3(13, 999);         // 4 + 1 = 5 bytes
-EEPROMStorage<unsigned long> tecla4(18, 999);         // 4 + 1 = 5 bytes
-EEPROMStorage<unsigned long> tecla5(23, 999);         // 4 + 1 = 5 bytes
-EEPROMStorage<unsigned long> tecla6(28, 999);         // 4 + 1 = 5 bytes
-EEPROMStorage<unsigned long> tecla7(33, 999);         // 4 + 1 = 5 bytes
-EEPROMStorage<unsigned long> tecla8(38, 999);         // 4 + 1 = 5 bytes
-EEPROMStorage<unsigned long> tecla9(43, 999);         // 4 + 1 = 5 bytes
-EEPROMStorage<unsigned long> tecla0(48, 999);         // 4 + 1 = 5 bytes
-EEPROMStorage<unsigned long> teclaAsterisco(53, 999); // 4 + 1 = 5 bytes
-EEPROMStorage<unsigned long> teclaCerquilha(58, 999);
+// Definições de armazenamento em EEPROM para códigos de teclas da TV e de tamanho do código de tecla
+// -----
+// ----- Cálculo do endereço de variável na EEPROM:
+// -----    sizeVar + checksum + previousAddressVar = nextAddressVar
+// -----
+// ----- Variáveis da Fórmula:
+// -----    sizeVar: tamanho da variável;
+// -----    checksum: byte adicional para uma soma de verificação
+// -----    previousAddressVar: endereço da variável anterior (que está na posição anterior em relação a atual);
+// -----    nextAddressVar: o resultado do cálculo, sendo este o endereço da variável atual à ser gravada na memória
+// -----
+EEPROMStorage<int> tamanhoCode(0, 999);               // variável armazenada na EEPROM no endereço 0 e que tem 2 bytes.  Cálculo endereço próxima variável: 2 + 1 + 0  = 3 bytes
+EEPROMStorage<unsigned long> tecla1(3, 999);          // variável armazenada na EEPROM no endereço 3 e que tem 4 bytes.  Cálculo endereço próxima variável: 4 + 1 + 3  = 8 bytes
+EEPROMStorage<unsigned long> tecla2(8, 999);          // variável armazenada na EEPROM no endereço 8 e que tem 4 bytes.  Cálculo endereço próxima variável: 4 + 1 + 8  = 13 bytes
+EEPROMStorage<unsigned long> tecla3(13, 999);         // variável armazenada na EEPROM no endereço 13 e que tem 4 bytes. Cálculo endereço próxima variável: 4 + 1 + 13 = 18 bytes
+EEPROMStorage<unsigned long> tecla4(18, 999);         // variável armazenada na EEPROM no endereço 18 e que tem 4 bytes. Cálculo endereço próxima variável: 4 + 1 + 18 = 23 bytes
+EEPROMStorage<unsigned long> tecla5(23, 999);         // variável armazenada na EEPROM no endereço 23 e que tem 4 bytes. Cálculo endereço próxima variável: 4 + 1 + 23 = 28 bytes
+EEPROMStorage<unsigned long> tecla6(28, 999);         // variável armazenada na EEPROM no endereço 28 e que tem 4 bytes. Cálculo endereço próxima variável: 4 + 1 + 28 = 33 bytes
+EEPROMStorage<unsigned long> tecla7(33, 999);         // variável armazenada na EEPROM no endereço 33 e que tem 4 bytes. Cálculo endereço próxima variável: 4 + 1 + 33 = 38 bytes
+EEPROMStorage<unsigned long> tecla8(38, 999);         // variável armazenada na EEPROM no endereço 38 e que tem 4 bytes. Cálculo endereço próxima variável: 4 + 1 + 38 = 43 bytes
+EEPROMStorage<unsigned long> tecla9(43, 999);         // variável armazenada na EEPROM no endereço 43 e que tem 4 bytes. Cálculo endereço próxima variável: 4 + 1 + 43 = 48 bytes
+EEPROMStorage<unsigned long> tecla0(48, 999);         // variável armazenada na EEPROM no endereço 48 e que tem 4 bytes. Cálculo endereço próxima variável: 4 + 1 + 48 = 53 bytes
+EEPROMStorage<unsigned long> teclaAsterisco(53, 999); // variável armazenada na EEPROM no endereço 53 e que tem 4 bytes. Cálculo endereço próxima variável: 4 + 1 + 53 = 58 bytes
+EEPROMStorage<unsigned long> teclaCerquilha(58, 999); // variável armazenada na EEPROM no endereço 58 e que tem 4 bytes.
 
 unsigned long getTeclaControleRemoto();            // Declaração da função para obter código de tecla do controle remoto
 void enviarComando(unsigned long data, int nbits); // Declaração da função para enviar comando IR
