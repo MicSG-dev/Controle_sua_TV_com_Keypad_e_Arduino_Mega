@@ -92,15 +92,16 @@ void setup()
   Serial.begin(115200); // Define a taxa de baudrate da interface Serial com 115200 bits por segundo
 }
 
-unsigned long timerLED;
-const int tempoLimite = 5000;
-unsigned long timerTeclado;
+unsigned long timerLED; // timer para controle de status (aceso/apagado) do LED indicador
+const int tempoLimite = 5000; // tempo limite para operações no teclado (5 segundos)
+unsigned long timerTeclado; // timer para controle de tempo limite em operações no teclado
 
 void loop()
 {
-  char teclaPressionada = keypad.getKey();
+  char teclaPressionada = keypad.getKey(); // obtém a tecla pressionada pelo usuário
 
-  if (teclaPressionada != NO_KEY)
+  
+  if (teclaPressionada != NO_KEY) // se alguma tecla foi pressionada, ...
   {
 
     // Pisca 1 vez e apaga:
