@@ -104,18 +104,19 @@ void loop()
   if (teclaPressionada != NO_KEY) // se alguma tecla foi pressionada, ...
   {
 
-    // Pisca 1 vez e apaga:
+    // Pisca 1 vez e apaga: usuário pressionou algum botão (LED acende) e após, soltou o botão (LED apaga);
     digitalWrite(pinoLed, HIGH);
     timerLED = millis();
-    while (millis() - timerLED <= 250)
+    while (millis() - timerLED <= 250) // durante 250 milissegundos o led ficará acesso
     {
       delay(1);
     }
     digitalWrite(pinoLed, LOW);
 
+    // verifica qual tecla foi pressioanda e executa algum algoritmo dependendo da tecla pressionada
     switch (teclaPressionada)
     {
-    case 'A':
+    case 'A': // caso seja a tecla A, entra no modo de cadastro de códigos IR nas teclas
     {
 
       timerTeclado = millis();
