@@ -19,7 +19,7 @@
 #define protocolo NEC // Define o protocolo como NEC
 
 // Estrutura para armazenar códigos de teclas da TV
-struct ChavesTv
+struct TeclasTv
 {
   unsigned long _1 = 999;         // Código da tecla 1
   unsigned long _2 = 999;         // Código da tecla 2
@@ -119,29 +119,39 @@ void loop()
     case 'A': // caso seja a tecla A, entra no modo de cadastro de códigos IR nas teclas
     {
 
-      timerTeclado = millis();
-      bool permanecerNoMenu = true;
+      timerTeclado = millis(); // armazena o valor atual do temporizador millis
+      bool permanecerNoMenu = true; // variável que controla se o o loop do 'menu' deve ser interrompido ou não
       Serial.println("Cadastrar teclas. Pressione alguma tecla de 0 a 9, * ou # para iniciar o cadastramento.");
-      ChavesTv chavesTv;
+      
+      TeclasTv teclasTv; // instancia a estrutura que armazenará as tecals da TV
 
-      while (permanecerNoMenu)
+      while (permanecerNoMenu) // loop do 'menu' de cadastro de códigos IR nas teclas
       {
+        
+        // algoritmo para o LED indicador de status: Pisca-pisca lento, Cadastrando novas teclas; 
+        // a cada 1 segundo (1000 milissegundos) o LED inverte seu estado: ora fica aceso, ora fica apagado
         if (millis() - timerLED >= 1000)
         {
           digitalWrite(pinoLed, !digitalRead(pinoLed));
           timerLED = millis();
         }
+
+        // obtém a tecla pressionada pelo usuário
         teclaPressionada = keypad.getKey();
 
-        if (teclaPressionada != NO_KEY)
-        {
-          unsigned long tecla;
-          switch (teclaPressionada)
-          {
-          case 'B':
 
-            timerLED = millis();
+        if (teclaPressionada != NO_KEY)// se alguma tecla foi pressionada, ...
+        {
+          unsigned long tecla; // variável para armazenar a tecla do controle da TV pressionada pelo usuário
+          switch (teclaPressionada) // se a tecla pressionada do Keypad pelo usuário
+          {
+          case 'B': // caso a tecla pressionada do Keypad seja a B (FUNÇÃO: Salvar teclas modificadas), ...
+
+            timerLED = millis(); // atualiza o valor do temporizador de controle do estado do LED 
             Serial.println("Teclas modificadas foram salvas. Saindo do menu...");
+            
+            // algoritmo para o LED indicador de status: Aceso por um período de tempo, Teclas modificadas salvas;
+            // durante 2 segundos (2000 millisegundos) o LED permanece aceso. Após este período, o led apaga
             digitalWrite(pinoLed, HIGH);
             while (millis() - timerLED <= 2000)
             {
@@ -149,79 +159,80 @@ void loop()
             }
             digitalWrite(pinoLed, LOW);
 
-            if (chavesTv._0 != 999)
+            // se o membro _0 (tecla 0) da estrutura TeclasTv possuir um valor diferente de 999 (alterado), salva na EEPROM o seu valor
+            if (teclasTv._0 != 999)
             {
-              tecla0 = chavesTv._0;
+              tecla0 = teclasTv._0;
             }
 
-            if (chavesTv._1 != 999)
+            if (teclasTv._1 != 999)
             {
-              tecla1 = chavesTv._1;
+              tecla1 = teclasTv._1;
             }
 
-            if (chavesTv._2 != 999)
+            if (teclasTv._2 != 999)
             {
-              tecla2 = chavesTv._2;
+              tecla2 = teclasTv._2;
             }
 
-            if (chavesTv._3 != 999)
+            if (teclasTv._3 != 999)
             {
-              tecla3 = chavesTv._3;
+              tecla3 = teclasTv._3;
             }
 
-            if (chavesTv._4 != 999)
+            if (teclasTv._4 != 999)
             {
-              tecla4 = chavesTv._4;
+              tecla4 = teclasTv._4;
             }
 
-            if (chavesTv._5 != 999)
+            if (teclasTv._5 != 999)
             {
-              tecla5 = chavesTv._5;
+              tecla5 = teclasTv._5;
             }
 
-            if (chavesTv._6 != 999)
+            if (teclasTv._6 != 999)
             {
-              tecla6 = chavesTv._6;
+              tecla6 = teclasTv._6;
             }
 
-            if (chavesTv._7 != 999)
+            if (teclasTv._7 != 999)
             {
-              tecla7 = chavesTv._7;
+              tecla7 = teclasTv._7;
             }
 
-            if (chavesTv._8 != 999)
+            if (teclasTv._8 != 999)
             {
-              tecla8 = chavesTv._8;
+              tecla8 = teclasTv._8;
             }
 
-            if (chavesTv._9 != 999)
+            if (teclasTv._9 != 999)
             {
-              tecla9 = chavesTv._9;
+              tecla9 = teclasTv._9;
             }
 
-            if (chavesTv._asterisco != 999)
+            if (teclasTv._asterisco != 999)
             {
-              teclaAsterisco = chavesTv._asterisco;
+              teclaAsterisco = teclasTv._asterisco;
             }
 
-            if (chavesTv._cerquilha != 999)
+            if (teclasTv._cerquilha != 999)
             {
-              teclaCerquilha = chavesTv._cerquilha;
+              teclaCerquilha = teclasTv._cerquilha;
             }
 
-            chavesTv._0 = 999;
-            chavesTv._1 = 999;
-            chavesTv._2 = 999;
-            chavesTv._3 = 999;
-            chavesTv._4 = 999;
-            chavesTv._5 = 999;
-            chavesTv._6 = 999;
-            chavesTv._7 = 999;
-            chavesTv._8 = 999;
-            chavesTv._9 = 999;
-            chavesTv._0 = 999;
-            chavesTv._asterisco = 999;
-            chavesTv._cerquilha = 999;
+            teclasTv._0 = 999;
+            teclasTv._1 = 999;
+            teclasTv._2 = 999;
+            teclasTv._3 = 999;
+            teclasTv._4 = 999;
+            teclasTv._5 = 999;
+            teclasTv._6 = 999;
+            teclasTv._7 = 999;
+            teclasTv._8 = 999;
+            teclasTv._9 = 999;
+            teclasTv._0 = 999;
+            teclasTv._asterisco = 999;
+            teclasTv._cerquilha = 999;
 
             permanecerNoMenu = false;
             break;
@@ -231,7 +242,7 @@ void loop()
 
             if (tecla != 999)
             {
-              chavesTv._1 = tecla;
+              teclasTv._1 = tecla;
             }
             break;
           case '2':
@@ -240,7 +251,7 @@ void loop()
 
             if (tecla != 999)
             {
-              chavesTv._2 = tecla;
+              teclasTv._2 = tecla;
             }
             break;
           case '3':
@@ -249,7 +260,7 @@ void loop()
 
             if (tecla != 999)
             {
-              chavesTv._3 = tecla;
+              teclasTv._3 = tecla;
             }
             break;
           case '4':
@@ -258,7 +269,7 @@ void loop()
 
             if (tecla != 999)
             {
-              chavesTv._4 = tecla;
+              teclasTv._4 = tecla;
             }
             break;
           case '5':
@@ -267,7 +278,7 @@ void loop()
 
             if (tecla != 999)
             {
-              chavesTv._5 = tecla;
+              teclasTv._5 = tecla;
             }
             break;
           case '6':
@@ -276,7 +287,7 @@ void loop()
 
             if (tecla != 999)
             {
-              chavesTv._6 = tecla;
+              teclasTv._6 = tecla;
             }
             break;
           case '7':
@@ -287,7 +298,7 @@ void loop()
             {
               Serial.print("0x");
               Serial.println(tecla, HEX);
-              chavesTv._7 = tecla;
+              teclasTv._7 = tecla;
             }
             break;
           case '8':
@@ -296,7 +307,7 @@ void loop()
 
             if (tecla != 999)
             {
-              chavesTv._8 = tecla;
+              teclasTv._8 = tecla;
             }
             break;
           case '9':
@@ -305,7 +316,7 @@ void loop()
 
             if (tecla != 999)
             {
-              chavesTv._9 = tecla;
+              teclasTv._9 = tecla;
             }
             break;
           case '0':
@@ -314,7 +325,7 @@ void loop()
 
             if (tecla != 999)
             {
-              chavesTv._0 = tecla;
+              teclasTv._0 = tecla;
             }
             break;
           case '*':
@@ -323,7 +334,7 @@ void loop()
 
             if (tecla != 999)
             {
-              chavesTv._asterisco = tecla;
+              teclasTv._asterisco = tecla;
             }
             break;
           case '#':
@@ -332,7 +343,7 @@ void loop()
 
             if (tecla != 999)
             {
-              chavesTv._cerquilha = tecla;
+              teclasTv._cerquilha = tecla;
             }
             break;
           }
