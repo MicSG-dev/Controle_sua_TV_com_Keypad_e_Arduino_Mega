@@ -61,8 +61,8 @@ IRsend irsend; // Criação do objeto para envio de comandos IR
 // ----- Variáveis da Fórmula:
 // -----    sizeVar: tamanho da variável;
 // -----    checksum: byte adicional para uma soma de verificação
-// -----    previousAddressVar: endereço da variável anterior (que está na posição anterior em relação a atual);
-// -----    nextAddressVar: o resultado do cálculo, sendo este o endereço da variável atual à ser gravada na memória
+// -----    currentAddressVar: endereço da variável atual;
+// -----    nextAddressVar: o resultado do cálculo, sendo este o endereço da próxima variável à ser gravada na memória
 // -----
 EEPROMStorage<int> tamanhoCode(0, 999);               // variável armazenada na EEPROM no endereço 0 e que tem 2 bytes.  Cálculo endereço próxima variável: 2 + 1 + 0  = 3 bytes
 EEPROMStorage<unsigned long> tecla1(3, 999);          // variável armazenada na EEPROM no endereço 3 e que tem 4 bytes.  Cálculo endereço próxima variável: 4 + 1 + 3  = 8 bytes
@@ -87,24 +87,25 @@ void setup()
 {
   pinMode(pinoLed, OUTPUT); // define o pino do LED como saída
 
+  // algoritmo para o STATUS DO LED (Apagado): sem fazer nenhuma ação, esperando o usuário executar algo;
+  // o LED fica apagado
   digitalWrite(pinoLed, LOW); // inicia o led no modo APAGADO
 
   Serial.begin(115200); // Define a taxa de baudrate da interface Serial com 115200 bits por segundo
 }
 
-unsigned long timerLED; // timer para controle de status (aceso/apagado) do LED indicador
+unsigned long timerLED;       // timer para controle de status (aceso/apagado) do LED indicador
 const int tempoLimite = 5000; // tempo limite para operações no teclado (5 segundos)
-unsigned long timerTeclado; // timer para controle de tempo limite em operações no teclado
+unsigned long timerTeclado;   // timer para controle de tempo limite em operações no teclado
 
 void loop()
 {
   char teclaPressionada = keypad.getKey(); // obtém a tecla pressionada pelo usuário
 
-  
   if (teclaPressionada != NO_KEY) // se alguma tecla foi pressionada, ...
   {
 
-    // Pisca 1 vez e apaga: usuário pressionou algum botão (LED acende) e após, soltou o botão (LED apaga);
+    // algoritmo para o STATUS DO LED (Pisca 1 vez e apaga): ao usuário pressionar algum botão (será aceso o LED) e após soltar o botão (será apagado o LED);
     digitalWrite(pinoLed, HIGH);
     timerLED = millis();
     while (millis() - timerLED <= 250) // durante 250 milissegundos o led ficará acesso
@@ -119,16 +120,16 @@ void loop()
     case 'A': // caso seja a tecla A, entra no modo de cadastro de códigos IR nas teclas
     {
 
-      timerTeclado = millis(); // armazena o valor atual do temporizador millis
-      bool permanecerNoMenu = true; // variável que controla se o o loop do 'menu' deve ser interrompido ou não
+      timerTeclado = millis();      // armazena o valor atual do temporizador millis
+      bool permanecerNoMenu = true; // variável que controla se o loop do 'menu' deve ser interrompido ou não
       Serial.println("Cadastrar teclas. Pressione alguma tecla de 0 a 9, * ou # para iniciar o cadastramento.");
-      
+
       TeclasTv teclasTv; // instancia a estrutura que armazenará as tecals da TV
 
       while (permanecerNoMenu) // loop do 'menu' de cadastro de códigos IR nas teclas
       {
-        
-        // algoritmo para o LED indicador de status: Pisca-pisca lento, Cadastrando novas teclas; 
+
+        // algoritmo para o STATUS DO LED (Pisca-pisca lento): Cadastrando novas teclas;
         // a cada 1 segundo (1000 milissegundos) o LED inverte seu estado: ora fica aceso, ora fica apagado
         if (millis() - timerLED >= 1000)
         {
@@ -139,17 +140,16 @@ void loop()
         // obtém a tecla pressionada pelo usuário
         teclaPressionada = keypad.getKey();
 
-
-        if (teclaPressionada != NO_KEY)// se alguma tecla foi pressionada, ...
+        if (teclaPressionada != NO_KEY) // se alguma tecla foi pressionada, ...
         {
-          unsigned long tecla; // variável para armazenar a tecla do controle da TV pressionada pelo usuário
+          unsigned long tecla;      // variável para armazenar a tecla do controle da TV pressionada pelo usuário
           switch (teclaPressionada) // se a tecla pressionada do Keypad pelo usuário
           {
           case 'B': // caso a tecla pressionada do Keypad seja a B (FUNÇÃO: Salvar teclas modificadas), ...
 
-            timerLED = millis(); // atualiza o valor do temporizador de controle do estado do LED 
+            timerLED = millis(); // atualiza o valor do temporizador de controle do estado do LED
             Serial.println("Teclas modificadas foram salvas. Saindo do menu...");
-            
+
             // algoritmo para o LED indicador de status: Aceso por um período de tempo, Teclas modificadas salvas;
             // durante 2 segundos (2000 millisegundos) o LED permanece aceso. Após este período, o led apaga
             digitalWrite(pinoLed, HIGH);
@@ -165,61 +165,73 @@ void loop()
               tecla0 = teclasTv._0;
             }
 
+            // se o membro _1 (tecla 1) da estrutura TeclasTv possuir um valor diferente de 999 (alterado), salva na EEPROM o seu valor
             if (teclasTv._1 != 999)
             {
               tecla1 = teclasTv._1;
             }
 
+            // se o membro _2 (tecla 2) da estrutura TeclasTv possuir um valor diferente de 999 (alterado), salva na EEPROM o seu valor
             if (teclasTv._2 != 999)
             {
               tecla2 = teclasTv._2;
             }
 
+            // se o membro _3 (tecla 3) da estrutura TeclasTv possuir um valor diferente de 999 (alterado), salva na EEPROM o seu valor
             if (teclasTv._3 != 999)
             {
               tecla3 = teclasTv._3;
             }
 
+            // se o membro _4 (tecla 4) da estrutura TeclasTv possuir um valor diferente de 999 (alterado), salva na EEPROM o seu valor
             if (teclasTv._4 != 999)
             {
               tecla4 = teclasTv._4;
             }
 
+            // se o membro _5 (tecla 5) da estrutura TeclasTv possuir um valor diferente de 999 (alterado), salva na EEPROM o seu valor
             if (teclasTv._5 != 999)
             {
               tecla5 = teclasTv._5;
             }
 
+            // se o membro _6 (tecla 6) da estrutura TeclasTv possuir um valor diferente de 999 (alterado), salva na EEPROM o seu valor
             if (teclasTv._6 != 999)
             {
               tecla6 = teclasTv._6;
             }
 
+            // se o membro _7 (tecla 7) da estrutura TeclasTv possuir um valor diferente de 999 (alterado), salva na EEPROM o seu valor
             if (teclasTv._7 != 999)
             {
               tecla7 = teclasTv._7;
             }
 
+            // se o membro _8 (tecla 8) da estrutura TeclasTv possuir um valor diferente de 999 (alterado), salva na EEPROM o seu valor
             if (teclasTv._8 != 999)
             {
               tecla8 = teclasTv._8;
             }
 
+            // se o membro _9 (tecla 9) da estrutura TeclasTv possuir um valor diferente de 999 (alterado), salva na EEPROM o seu valor
             if (teclasTv._9 != 999)
             {
               tecla9 = teclasTv._9;
             }
 
+            // se o membro _asterisco (tecla diminuir volume) da estrutura TeclasTv possuir um valor diferente de 999 (alterado), salva na EEPROM o seu valor
             if (teclasTv._asterisco != 999)
             {
               teclaAsterisco = teclasTv._asterisco;
             }
 
+            // se o membro _cerquilha (tecla aumentar volume) da estrutura TeclasTv possuir um valor diferente de 999 (alterado), salva na EEPROM o seu valor
             if (teclasTv._cerquilha != 999)
             {
               teclaCerquilha = teclasTv._cerquilha;
             }
 
+            // reseta os valores dos membros da estrutura TeclasTv
             teclasTv._0 = 999;
             teclasTv._1 = 999;
             teclasTv._2 = 999;
@@ -234,7 +246,7 @@ void loop()
             teclasTv._asterisco = 999;
             teclasTv._cerquilha = 999;
 
-            permanecerNoMenu = false;
+            permanecerNoMenu = false; // interrompe o loop do 'menu' (sair fora do menu)
             break;
           case '1':
             Serial.println("Pressione a tecla 1 do controle remoto");
@@ -352,12 +364,16 @@ void loop()
       digitalWrite(pinoLed, LOW);
       break;
     }
-    case 'C':
+    case 'C': // caso seja a tecla C, entra no modo de exclusão de todos os códigos IR das teclas cadastrados
     {
 
-      timerLED = millis();
+      timerLED = millis(); // Armazena o tempo atual em milissegundos
+
+      // Exibe mensagem informando que todos os cadastros de teclas estão sendo excluídos
       Serial.println("Excluir cadastro de todas teclas");
 
+      // algoritmo para o STATUS DO LED (Pisca-pisca rápido): Limpando toda memória contendo o cadastro de teclas.
+      // a cada 100 milissegundos o LED inverte seu estado: ora fica aceso, ora fica apagado
       while (millis() - timerLED <= 2000)
       {
         for (int i = 0; i < 25; i++) // 2,5 segundos
@@ -368,6 +384,7 @@ void loop()
       }
       digitalWrite(pinoLed, LOW);
 
+      // Reseta os códigos IR das teclas para o valor 999, indicando que estão "vazios"
       tecla1 = 999;
       tecla2 = 999;
       tecla3 = 999;
@@ -383,7 +400,7 @@ void loop()
 
       break;
     }
-    case 'D':
+    case 'D': // caso seja a tecla D, entra no modo de exibição de todos os códigos IR das teclas cadastrados
     {
       Serial.println("Dados das teclas cadastradas:\n");
 
@@ -546,7 +563,7 @@ void loop()
       Serial.println();
       break;
     }
-    case '*':
+    case '*': // caso seja a tecla *, tenta enviar o código IR desta tecla
     {
       Serial.println("Enviando sinal para Reduzir volume TV");
       if (teclaAsterisco != 999)
@@ -559,7 +576,7 @@ void loop()
       }
       break;
     }
-    case '#':
+    case '#': // caso seja a tecla #, tenta enviar o código IR desta tecla
     {
       Serial.println("Enviando sinal para Aumentar volume TV");
       if (teclaCerquilha != 999)
@@ -572,7 +589,7 @@ void loop()
       }
       break;
     }
-    case '1':
+    case '1': // caso seja a tecla 1, tenta enviar o código IR desta tecla
     {
       Serial.println("Enviando sinal da tecla 1");
       if (tecla1 != 999)
@@ -585,7 +602,7 @@ void loop()
       }
       break;
     }
-    case '2':
+    case '2': // caso seja a tecla 2, tenta enviar o código IR desta tecla
     {
       Serial.println("Enviando sinal da tecla 2");
       if (tecla2 != 999)
@@ -598,7 +615,7 @@ void loop()
       }
       break;
     }
-    case '3':
+    case '3': // caso seja a tecla 3, tenta enviar o código IR desta tecla
     {
       Serial.println("Enviando sinal da tecla 3");
       if (tecla3 != 999)
@@ -611,7 +628,7 @@ void loop()
       }
       break;
     }
-    case '4':
+    case '4': // caso seja a tecla 4, tenta enviar o código IR desta tecla
     {
       Serial.println("Enviando sinal da tecla 4");
       if (tecla4 != 999)
@@ -624,7 +641,7 @@ void loop()
       }
       break;
     }
-    case '5':
+    case '5': // caso seja a tecla 5, tenta enviar o código IR desta tecla
     {
       Serial.println("Enviando sinal da tecla 5");
       if (tecla5 != 999)
@@ -637,7 +654,7 @@ void loop()
       }
       break;
     }
-    case '6':
+    case '6': // caso seja a tecla 6, tenta enviar o código IR desta tecla
     {
       Serial.println("Enviando sinal da tecla 6");
       if (tecla6 != 999)
@@ -650,7 +667,7 @@ void loop()
       }
       break;
     }
-    case '7':
+    case '7': // caso seja a tecla 7, tenta enviar o código IR desta tecla
     {
       Serial.println("Enviando sinal da tecla 7");
       if (tecla7 != 999)
@@ -663,7 +680,7 @@ void loop()
       }
       break;
     }
-    case '8':
+    case '8': // caso seja a tecla 8, tenta enviar o código IR desta tecla
     {
       Serial.println("Enviando sinal da tecla 8");
       if (tecla8 != 999)
@@ -676,7 +693,7 @@ void loop()
       }
       break;
     }
-    case '9':
+    case '9': // caso seja a tecla 9, tenta enviar o código IR desta tecla
     {
       Serial.println("Enviando sinal da tecla 9");
       if (tecla9 != 999)
@@ -689,7 +706,7 @@ void loop()
       }
       break;
     }
-    case '0':
+    case '0': // caso seja a tecla 0, tenta enviar o código IR desta tecla
     {
       Serial.println("Enviando sinal da tecla 0");
       if (tecla0 != 999)
@@ -706,89 +723,116 @@ void loop()
   }
 }
 
+// Função para obter a tecla pressionada no controle remoto
 unsigned long getTeclaControleRemoto()
 {
-  timerTeclado = millis();
-  IRrecv irrecv(IR_RECEIVE_PIN);
-  irrecv.enableIRIn();
-  decode_results results;
-  unsigned long teclaApertada_temp = 999;
-  unsigned long teclaApertada = 999;
+  timerTeclado = millis();                // Armazena o tempo atual em milissegundos
+  IRrecv irrecv(IR_RECEIVE_PIN);          // Inicializa o receptor IR no pino especificado
+  irrecv.enableIRIn();                    // Habilita a recepção de sinais IR
+  decode_results results;                 // Estrutura para armazenar os resultados da decodificação IR
+  unsigned long teclaApertada_temp = 999; // Variável temporária para armazenar a tecla pressionada inicialmente
+  unsigned long teclaApertada = 999;      // Variável final para armazenar a tecla confirmada
 
-  bool permanecerNoSubMenu = true;
-  while (millis() - timerTeclado <= tempoLimite && permanecerNoSubMenu)
+  bool permanecerNoSubMenu = true;                                      // Variável de controle para manter o loop enquanto estiver no submenu
+  while (millis() - timerTeclado <= tempoLimite && permanecerNoSubMenu) // Loop que continua enquanto o tempo limite não for atingido e estiver no submenu
   {
-    if (millis() - timerLED >= 1000)
+    // algoritmo para o STATUS DO LED (Aceso por um período de tempo): Teclas modificadas salvas;
+    // durante 1 segundo (1000 milissegundos) o LED fica aceso e após é apagado
+    if (millis() - timerLED >= 1000) // Verifica se 1 segundo se passou para alternar o estado do LED
     {
-      digitalWrite(pinoLed, !digitalRead(pinoLed));
-      timerLED = millis();
+      digitalWrite(pinoLed, !digitalRead(pinoLed)); // Alterna o estado do LED
+
+      timerLED = millis(); // Atualiza o timer do LED
     }
-    if (irrecv.decode(&results))
+
+    if (irrecv.decode(&results)) // Verifica se um comando IR foi recebido
     {
-      if (results.value != 0xFFFFFFFF)
+      if (results.value != 0xFFFFFFFF) // Verifica se o valor recebido não é um código repetido
       {
-        if (teclaApertada_temp == 999)
+        if (teclaApertada_temp == 999) // Se ainda não há tecla temporária armazenada
         {
-          teclaApertada_temp = results.value;
+          teclaApertada_temp = results.value; // Armazena o valor recebido temporariamente
+
+          // Solicita confirmação da tecla pressionada ao usuário
           Serial.print("Aperte novamente a mesma tecla para confirmar: 0x");
           Serial.println(results.value, HEX);
-          timerTeclado = millis();
+
+          timerTeclado = millis(); // Reinicia o timer do teclado
         }
-        else
+        else // caso já haja uma tecla temporária armazenada
         {
-          if (teclaApertada_temp == results.value)
+          if (teclaApertada_temp == results.value) // Se o valor recebido é igual ao valor temporário (CONFIRMADO), ...
           {
+            // Informa ao usuário sobre a confirmação da tecla pressionada
             Serial.print("Tecla confirmada: 0x");
             Serial.println(results.value, HEX);
-            teclaApertada = teclaApertada_temp;
-            permanecerNoSubMenu = false;
+
+            teclaApertada = teclaApertada_temp; // atribui à variável de retorno o valor da tecla confirmada
+            permanecerNoSubMenu = false;        // Sai do submenu
           }
-          else
+          else // caso a confirmação de tecla falhe, ...
           {
+            // Informa que a tecla pressionada é diferente
             Serial.println("Chave de Tecla diferente.");
-            permanecerNoSubMenu = false;
+
+            permanecerNoSubMenu = false; // Sai do submenu
           }
         }
       }
-      irrecv.resume(); // Receive the next value
+
+      irrecv.resume(); // Prepara o receptor IR para receber o próximo valor
     }
-    delay(100);
+
+    delay(100); // Atraso de 100 ms antes de verificar novamente se um comando IR foi recebido
   }
+
+  // Verifica se nenhuma tecla foi confirmada dentro do tempo limite
   if (teclaApertada == 999)
   {
-    if (teclaApertada_temp == 999)
+    if (teclaApertada_temp == 999) // Se nenhuma tecla foi pressionada
     {
       Serial.print("Nenhuma tecla pressionada dentro do tempo limite. Tente novamente selecionando ");
     }
-    else
+    else // se não, caso a tecla pressionada não foi confirmada
     {
       Serial.print("Nao houve confirmacao de tecla. Tente novamente selecionando ");
     }
   }
-  else
+  else // se não, se ocorreu tudo certo
   {
-    Serial.print("Insercao de dado finalizada. Pressione ");
+    Serial.print("Insercao de dado finalizada. Pressione "); // Informa que a inserção de dados foi finalizada
   }
 
-  Serial.println("alguma tecla para cadastrar ou pressione B para salvar.");
+  Serial.println("alguma tecla para cadastrar ou pressione B para salvar."); // Informa ao usuário para continuar cadastrando novas teclas ou para finalizar salvando as tecclas com a opção B
 
+  // Verifica se o protocolo da tecla pressionada é diferente do esperado
   if (results.decode_type != protocolo && teclaApertada_temp == results.value)
   {
+
+    // informa ao usuário que ocorreu um erro
     Serial.print('\n');
     Serial.println("!!! ERRO !!!");
     Serial.print("Nao sera possivel continuar. A codigo da tecla pressionada esta em um protocolo diferente para o qual este sketch foi construido. Por favor, va ate a linha 6 e altere para o protocolo adequado. O protocolo da tecla possui o indice ");
     Serial.print(results.decode_type);
     Serial.print(". Alem disso, altere o conteudo da funcao enviarComando() para o do protocolo compativel\n Se achar que isto é um erro, reinicie o Arduino MEGA.");
+
+    // Liga o LED para indicar erro e entra em loop infinito
     digitalWrite(pinoLed, HIGH);
     while (1)
     {
     }
   }
-  tamanhoCode = results.bits;
-  return teclaApertada;
+
+  tamanhoCode = results.bits; // Armazena o número de bits do código IR
+
+  return teclaApertada; // Retorna a tecla pressionada e confirmada
 }
 
+// Função para enviar um comando IR (infravermelho)
 void enviarComando(unsigned long data, int nbits)
 {
+  // ALTERE ESTE MÉTODO CAS O PROTOCOLO DE SEU CONTROLE REMOTO SEJA DIFERENTE DE NEC
+  // Chama o método sendNEC para enviar os dados IR usando o protocolo NEC
+  // 'data' é o comando que será enviado e 'nbits' é o número de bits desse comando
   irsend.sendNEC(data, nbits);
 }
