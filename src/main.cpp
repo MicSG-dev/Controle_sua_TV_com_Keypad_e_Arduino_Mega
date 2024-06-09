@@ -914,7 +914,7 @@ unsigned long getTeclaControleRemoto()
 // Função para enviar um comando IR (infravermelho)
 void enviarComando(unsigned long data, int nbits)
 {
-  // ALTERE ESTE MÉTODO CAS O PROTOCOLO DE SEU CONTROLE REMOTO SEJA DIFERENTE DE NEC
+  // ALTERE ESTE MÉTODO CASO O PROTOCOLO DE SEU CONTROLE REMOTO SEJA DIFERENTE DE NEC
   // Chama o método sendNEC para enviar os dados IR usando o protocolo NEC
   // 'data' é o comando que será enviado e 'nbits' é o número de bits desse comando
   irsend.sendNEC(data, nbits);
