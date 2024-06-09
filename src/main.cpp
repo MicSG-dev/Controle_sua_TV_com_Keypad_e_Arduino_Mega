@@ -402,319 +402,402 @@ void loop()
     }
     case 'D': // caso seja a tecla D, entra no modo de exibição de todos os códigos IR das teclas cadastrados
     {
-      Serial.println("Dados das teclas cadastradas:\n");
+      Serial.println("Dados das teclas cadastradas:\n"); // Exibe mensagem inicial indicando o início da exibição dos dados
 
+      // Exibe o código cadastrado para a tecla 1
       Serial.print("Tecla 1: ");
-      if (tecla1 != 999)
+      if (tecla1 != 999) // Verifica se a tecla 1 está cadastrada
       {
+        // Exibe o valor decimal e hexadecimal do código IR da tecla 1
         Serial.print(tecla1);
         Serial.print(" (0x");
         Serial.print(tecla1, HEX);
         Serial.println(")");
       }
-      else
+      else // caso a tecla não esteja cadastrada
       {
+        // Indica que a tecla 1 não está cadastrada
         Serial.println("-");
       }
 
+      // Exibe o código cadastrado para a tecla 2
       Serial.print("Tecla 2: ");
-      if (tecla2 != 999)
+      if (tecla2 != 999) // Verifica se a tecla 2 está cadastrada
       {
+        // Exibe o valor decimal e hexadecimal do código IR da tecla 2
         Serial.print(tecla2);
         Serial.print(" (0x");
         Serial.print(tecla2, HEX);
         Serial.println(")");
       }
-      else
+      else // caso a tecla não esteja cadastrada
       {
         Serial.println("-");
       }
 
+      // Exibe o código cadastrado para a tecla 3
       Serial.print("Tecla 3: ");
-      if (tecla3 != 999)
+      if (tecla3 != 999) // Verifica se a tecla 3 está cadastrada
       {
+        // Exibe o valor decimal e hexadecimal do código IR da tecla 3
         Serial.print(tecla3);
         Serial.print(" (0x");
         Serial.print(tecla3, HEX);
         Serial.println(")");
       }
-      else
+      else // caso a tecla não esteja cadastrada
       {
+        // Indica que a tecla 3 não está cadastrada
         Serial.println("-");
       }
 
+      // Exibe o código cadastrado para a tecla 4
       Serial.print("Tecla 4: ");
-      if (tecla4 != 999)
+      if (tecla4 != 999) // Verifica se a tecla 4 está cadastrada
       {
+        // Exibe o valor decimal e hexadecimal do código IR da tecla 4
         Serial.print(tecla4);
         Serial.print(" (0x");
         Serial.print(tecla4, HEX);
         Serial.println(")");
       }
-      else
+      else // caso a tecla não esteja cadastrada
       {
+        // Indica que a tecla 4 não está cadastrada
         Serial.println("-");
       }
 
+      // Exibe o código cadastrado para a tecla 5
       Serial.print("Tecla 5: ");
-      if (tecla5 != 999)
+      if (tecla5 != 999) // Verifica se a tecla 5 está cadastrada
       {
+        // Exibe o valor decimal e hexadecimal do código IR da tecla 5
         Serial.print(tecla5);
         Serial.print(" (0x");
         Serial.print(tecla5, HEX);
         Serial.println(")");
       }
-      else
+      else // caso a tecla não esteja cadastrada
       {
+        // Indica que a tecla 5 não está cadastrada
         Serial.println("-");
       }
 
+      // Exibe o código cadastrado para a tecla 6
       Serial.print("Tecla 6: ");
-      if (tecla6 != 999)
+      if (tecla6 != 999) // Verifica se a tecla 6 está cadastrada
       {
+        // Exibe o valor decimal e hexadecimal do código IR da tecla 6
         Serial.print(tecla6);
         Serial.print(" (0x");
         Serial.print(tecla6, HEX);
         Serial.println(")");
       }
-      else
+      else // caso a tecla não esteja cadastrada
       {
+        // Indica que a tecla 6 não está cadastrada
         Serial.println("-");
       }
 
+      // Exibe o código cadastrado para a tecla 7
       Serial.print("Tecla 7: ");
-      if (tecla7 != 999)
+      if (tecla7 != 999) // Verifica se a tecla 7 está cadastrada
       {
+        // Exibe o valor decimal e hexadecimal do código IR da tecla 7
         Serial.print(tecla7);
         Serial.print(" (0x");
         Serial.print(tecla7, HEX);
         Serial.println(")");
       }
-      else
+      else // caso a tecla não esteja cadastrada
       {
+        // Indica que a tecla 7 não está cadastrada
         Serial.println("-");
       }
 
+      // Exibe o código cadastrado para a tecla 8
       Serial.print("Tecla 8: ");
-      if (tecla8 != 999)
+      if (tecla8 != 999) // Verifica se a tecla 8 está cadastrada
       {
+        // Exibe o valor decimal e hexadecimal do código IR da tecla 8
         Serial.print(tecla8);
         Serial.print(" (0x");
         Serial.print(tecla8, HEX);
         Serial.println(")");
       }
-      else
+      else // caso a tecla não esteja cadastrada
       {
+        // Indica que a tecla 8 não está cadastrada
         Serial.println("-");
       }
 
+      // Exibe o código cadastrado para a tecla 9
       Serial.print("Tecla 9: ");
-      if (tecla9 != 999)
+      if (tecla9 != 999) // Verifica se a tecla 9 está cadastrada
       {
+        // Exibe o valor decimal e hexadecimal do código IR da tecla 9
         Serial.print(tecla9);
         Serial.print(" (0x");
         Serial.print(tecla9, HEX);
         Serial.println(")");
       }
-      else
+      else // caso a tecla não esteja cadastrada
       {
+        // Indica que a tecla 9 não está cadastrada
         Serial.println("-");
       }
 
+      // Exibe o código cadastrado para a tecla 0
       Serial.print("Tecla 0: ");
-      if (tecla0 != 999)
+      if (tecla0 != 999) // Verifica se a tecla 0 está cadastrada
       {
+        // Exibe o valor decimal e hexadecimal do código IR da tecla 0
         Serial.print(tecla0);
         Serial.print(" (0x");
         Serial.print(tecla0, HEX);
         Serial.println(")");
       }
-      else
+      else // caso a tecla não esteja cadastrada
       {
+        // Indica que a tecla 0 não está cadastrada
         Serial.println("-");
       }
 
+      // Exibe o código cadastrado para a tecla de reduzir volume (tecla *)
       Serial.print("Tecla REDUZIR VOLUME: ");
-      if (teclaAsterisco != 999)
+      if (teclaAsterisco != 999) // Verifica se a tecla de reduzir volume está cadastrada
       {
+        // Exibe o valor decimal e hexadecimal do código IR da tecla de reduzir volume
         Serial.print(teclaAsterisco);
         Serial.print(" (0x");
         Serial.print(teclaAsterisco, HEX);
         Serial.println(")");
       }
-      else
+      else // caso a tecla não esteja cadastrada
       {
+        // Indica que a tecla de reduzir volume não está cadastrada
         Serial.println("-");
       }
 
+      // Exibe o código cadastrado para a tecla de aumentar volume (tecla #)
       Serial.print("Tecla AUMENTAR VOLUME: ");
-      if (teclaCerquilha != 999)
+      if (teclaCerquilha != 999) // Verifica se a tecla de aumentar volume está cadastrada
       {
+        // Exibe o valor decimal e hexadecimal do código IR da tecla de aumentar volume
         Serial.print(teclaCerquilha);
         Serial.print(" (0x");
         Serial.print(teclaCerquilha, HEX);
         Serial.println(")");
       }
-      else
+      else // caso a tecla não esteja cadastrada
       {
+        // Indica que a tecla de aumentar volume não está cadastrada
         Serial.println("-");
       }
 
+      // Linha em branco para separar a exibição
       Serial.println();
       break;
     }
     case '*': // caso seja a tecla *, tenta enviar o código IR desta tecla
     {
+      // Exibe mensagem informando que o sinal para reduzir o volume da TV está sendo enviado
       Serial.println("Enviando sinal para Reduzir volume TV");
-      if (teclaAsterisco != 999)
+
+      if (teclaAsterisco != 999) // Verifica se a tecla de reduzir volume está cadastrada
       {
-        enviarComando(teclaAsterisco, tamanhoCode);
+        enviarComando(teclaAsterisco, tamanhoCode); // Envia o comando IR usando a função enviarComando com o código da tecla e o tamanho do código
       }
-      else
+      else // caso não esteja cadastrada
       {
+        // Exibe mensagem informando que não foi possível enviar o comando pois a tecla não está cadastrada
         Serial.println("Nao foi possivel enviar esta tecla para a TV. Tente cadastrar a tecla antes.");
       }
       break;
     }
     case '#': // caso seja a tecla #, tenta enviar o código IR desta tecla
     {
+      // Exibe mensagem informando que o sinal para aumentar o volume da TV está sendo enviado
       Serial.println("Enviando sinal para Aumentar volume TV");
-      if (teclaCerquilha != 999)
+
+      if (teclaCerquilha != 999) // Verifica se a tecla de aumentar volume está cadastrada
       {
+        // Envia o comando IR usando a função enviarComando com o código da tecla e o tamanho do código
         enviarComando(teclaCerquilha, tamanhoCode);
       }
-      else
+      else // caso não esteja cadastrada
       {
+        // Exibe mensagem informando que não foi possível enviar o comando pois a tecla não está cadastrada
         Serial.println("Nao foi possivel enviar esta tecla para a TV. Tente cadastrar a tecla antes.");
       }
       break;
     }
     case '1': // caso seja a tecla 1, tenta enviar o código IR desta tecla
     {
+      // Exibe mensagem informando que o sinal da tecla 1 está sendo enviado
       Serial.println("Enviando sinal da tecla 1");
-      if (tecla1 != 999)
+
+      if (tecla1 != 999) // Verifica se a tecla 1 está cadastrada
       {
+        // Envia o comando IR usando a função enviarComando com o código da tecla 1 e o tamanho do código
         enviarComando(tecla1, tamanhoCode);
       }
-      else
+      else // caso não esteja cadastrada
       {
+        // Exibe mensagem informando que não foi possível enviar o comando pois a tecla não está cadastrada
         Serial.println("Nao foi possivel enviar esta tecla para a TV. Tente cadastrar a tecla antes.");
       }
       break;
     }
     case '2': // caso seja a tecla 2, tenta enviar o código IR desta tecla
     {
+      // Exibe mensagem informando que o sinal da tecla 2 está sendo enviado
       Serial.println("Enviando sinal da tecla 2");
-      if (tecla2 != 999)
+
+      if (tecla2 != 999) // Verifica se a tecla 2 está cadastrada
       {
+        // Envia o comando IR usando a função enviarComando com o código da tecla 2 e o tamanho do código
         enviarComando(tecla2, tamanhoCode);
       }
-      else
+      else // caso não esteja cadastrada
       {
+        // Exibe mensagem informando que não foi possível enviar o comando pois a tecla não está cadastrada
         Serial.println("Nao foi possivel enviar esta tecla para a TV. Tente cadastrar a tecla antes.");
       }
       break;
     }
     case '3': // caso seja a tecla 3, tenta enviar o código IR desta tecla
     {
+      // Exibe mensagem informando que o sinal da tecla 3 está sendo enviado
       Serial.println("Enviando sinal da tecla 3");
-      if (tecla3 != 999)
+
+      if (tecla3 != 999) // Verifica se a tecla 3 está cadastrada
       {
+        // Envia o comando IR usando a função enviarComando com o código da tecla 3 e o tamanho do código
         enviarComando(tecla3, tamanhoCode);
       }
-      else
+      else // caso não esteja cadastrada
       {
+        // Exibe mensagem informando que não foi possível enviar o comando pois a tecla não está cadastrada
         Serial.println("Nao foi possivel enviar esta tecla para a TV. Tente cadastrar a tecla antes.");
       }
       break;
     }
     case '4': // caso seja a tecla 4, tenta enviar o código IR desta tecla
     {
+      // Exibe mensagem informando que o sinal da tecla 4 está sendo enviado
       Serial.println("Enviando sinal da tecla 4");
-      if (tecla4 != 999)
+
+      if (tecla4 != 999) // Verifica se a tecla 4 está cadastrada
       {
+        // Envia o comando IR usando a função enviarComando com o código da tecla 4 e o tamanho do código
         enviarComando(tecla4, tamanhoCode);
       }
-      else
+      else // caso não esteja cadastrada
       {
+        // Exibe mensagem informando que não foi possível enviar o comando pois a tecla não está cadastrada
         Serial.println("Nao foi possivel enviar esta tecla para a TV. Tente cadastrar a tecla antes.");
       }
       break;
     }
     case '5': // caso seja a tecla 5, tenta enviar o código IR desta tecla
     {
+      // Exibe mensagem informando que o sinal da tecla 5 está sendo enviado
       Serial.println("Enviando sinal da tecla 5");
-      if (tecla5 != 999)
+
+      if (tecla5 != 999) // Verifica se a tecla 5 está cadastrada
       {
+        // Envia o comando IR usando a função enviarComando com o código da tecla 5 e o tamanho do código
         enviarComando(tecla5, tamanhoCode);
       }
-      else
+      else // caso não esteja cadastrada
       {
+        // Exibe mensagem informando que não foi possível enviar o comando pois a tecla não está cadastrada
         Serial.println("Nao foi possivel enviar esta tecla para a TV. Tente cadastrar a tecla antes.");
       }
       break;
     }
     case '6': // caso seja a tecla 6, tenta enviar o código IR desta tecla
     {
+      // Exibe mensagem informando que o sinal da tecla 6 está sendo enviado
       Serial.println("Enviando sinal da tecla 6");
-      if (tecla6 != 999)
+
+      if (tecla6 != 999) // Verifica se a tecla 6 está cadastrada
       {
+        // Envia o comando IR usando a função enviarComando com o código da tecla 6 e o tamanho do código
         enviarComando(tecla6, tamanhoCode);
       }
-      else
+      else // caso não esteja cadastrada
       {
+        // Exibe mensagem informando que não foi possível enviar o comando pois a tecla não está cadastrada
         Serial.println("Nao foi possivel enviar esta tecla para a TV. Tente cadastrar a tecla antes.");
       }
       break;
     }
     case '7': // caso seja a tecla 7, tenta enviar o código IR desta tecla
     {
+      // Exibe mensagem informando que o sinal da tecla 7 está sendo enviado
       Serial.println("Enviando sinal da tecla 7");
-      if (tecla7 != 999)
+
+      if (tecla7 != 999) // Verifica se a tecla 7 está cadastrada
       {
+        // Envia o comando IR usando a função enviarComando com o código da tecla 7 e o tamanho do código
         enviarComando(tecla7, tamanhoCode);
       }
-      else
+      else // caso não esteja cadastrada
       {
+        // Exibe mensagem informando que não foi possível enviar o comando pois a tecla não está cadastrada
         Serial.println("Nao foi possivel enviar esta tecla para a TV. Tente cadastrar a tecla antes.");
       }
       break;
     }
     case '8': // caso seja a tecla 8, tenta enviar o código IR desta tecla
     {
+      // Exibe mensagem informando que o sinal da tecla 8 está sendo enviado
       Serial.println("Enviando sinal da tecla 8");
-      if (tecla8 != 999)
+
+      if (tecla8 != 999) // Verifica se a tecla 8 está cadastrada
       {
+        // Envia o comando IR usando a função enviarComando com o código da tecla 8 e o tamanho do código
         enviarComando(tecla8, tamanhoCode);
       }
-      else
+      else // caso não esteja cadastrada
       {
+        // Exibe mensagem informando que não foi possível enviar o comando porque a tecla não está cadastrada
         Serial.println("Nao foi possivel enviar esta tecla para a TV. Tente cadastrar a tecla antes.");
       }
       break;
     }
     case '9': // caso seja a tecla 9, tenta enviar o código IR desta tecla
     {
+      // Exibe mensagem informando que o sinal da tecla 9 está sendo enviado
       Serial.println("Enviando sinal da tecla 9");
-      if (tecla9 != 999)
+
+      if (tecla9 != 999) // Verifica se a tecla 9 está cadastrada
       {
+        // Envia o comando IR usando a função enviarComando com o código da tecla 9 e o tamanho do código
         enviarComando(tecla9, tamanhoCode);
       }
-      else
+      else // caso não esteja cadastrada
       {
+        // Exibe mensagem informando que não foi possível enviar o comando porque a tecla não está cadastrada
         Serial.println("Nao foi possivel enviar esta tecla para a TV. Tente cadastrar a tecla antes.");
       }
       break;
     }
     case '0': // caso seja a tecla 0, tenta enviar o código IR desta tecla
     {
+      // Exibe mensagem informando que o sinal da tecla 0 está sendo enviado
       Serial.println("Enviando sinal da tecla 0");
-      if (tecla0 != 999)
+
+      if (tecla0 != 999) // Verifica se a tecla 0 está cadastrada
       {
+        // Envia o comando IR usando a função enviarComando com o código da tecla 0 e o tamanho do código
         enviarComando(tecla0, tamanhoCode);
       }
-      else
+      else // caso não esteja cadastrada
       {
+        // Exibe mensagem informando que não foi possível enviar o comando porque a tecla não está cadastrada
         Serial.println("Nao foi possivel enviar esta tecla para a TV. Tente cadastrar a tecla antes.");
       }
       break;
