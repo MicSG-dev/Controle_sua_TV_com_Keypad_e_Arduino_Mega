@@ -1,7 +1,7 @@
 /******************************************************************************
                       Controle sua TV com Keypad e Arduino Mega
 
-                                  Sketch Principal
+                                Sketch Principal
 
                          Criado em 11 de Março de 2024
                      por Michel Galvão (https://micsg.com.br)
