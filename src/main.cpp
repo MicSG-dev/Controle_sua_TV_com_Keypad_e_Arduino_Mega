@@ -35,8 +35,8 @@ struct TeclasTv
   unsigned long _cerquilha = 999; // Código da tecla cerquilha
 };
 
-const byte ROWS = 4; // Quatro linhas do teclado
-const byte COLS = 4; // Quatro colunas do teclado
+const byte ROWS = 4; // Quatro linhas do teclado keypad
+const byte COLS = 4; // Quatro colunas do teclado keypad
 
 char keys[ROWS][COLS] = {  // Definição das teclas no teclado matricial
     {'1', '2', '3', 'A'},  // Linha 1
