@@ -78,8 +78,12 @@ EEPROMStorage<unsigned long> tecla0(48, 999);         // variável armazenada na
 EEPROMStorage<unsigned long> teclaAsterisco(53, 999); // variável armazenada na EEPROM no endereço 53 e que tem 4 bytes. Cálculo endereço próxima variável: 4 + 1 + 53 = 58 bytes
 EEPROMStorage<unsigned long> teclaCerquilha(58, 999); // variável armazenada na EEPROM no endereço 58 e que tem 4 bytes.
 
-unsigned long getTeclaControleRemoto();            // Declaração da função para obter código de tecla do controle remoto
-void enviarComando(unsigned long data, int nbits); // Declaração da função para enviar comando IR
+// Protótipo das funções
+
+String getProtocol(decode_type_t);
+unsigned long getTeclaControleRemoto();
+void enviarComando(unsigned long data, int nbits);
+
 
 const int pinoLed = 2; // Define o pino do LED como pino 2
 
@@ -895,8 +899,8 @@ unsigned long getTeclaControleRemoto()
     // informa ao usuário que ocorreu um erro
     Serial.print('\n');
     Serial.println("!!! ERRO !!!");
-    Serial.print("Nao sera possivel continuar. A codigo da tecla pressionada esta em um protocolo diferente para o qual este sketch foi construido. Por favor, va ate a linha 6 e altere para o protocolo adequado. O protocolo da tecla possui o indice ");
-    Serial.print(results.decode_type);
+    Serial.print("Nao sera possivel continuar. A codigo da tecla pressionada esta em um protocolo diferente para o qual este sketch foi construido. Por favor, va ate a linha 6 e altere para o protocolo adequado. O protocolo da tecla é ");
+    Serial.print(getProtocol(results.decode_type));
     Serial.print(". Alem disso, altere o conteudo da funcao enviarComando() para o do protocolo compativel\n Se achar que isto é um erro, reinicie o Arduino MEGA.");
 
     // Liga o LED para indicar erro e entra em loop infinito
@@ -918,4 +922,75 @@ void enviarComando(unsigned long data, int nbits)
   // Chama o método sendNEC para enviar os dados IR usando o protocolo NEC
   // 'data' é o comando que será enviado e 'nbits' é o número de bits desse comando
   irsend.sendNEC(data, nbits);
+}
+
+// Função que retorna o nome do protocolo IR obtido à partir do parâmetro informado
+String getProtocol(decode_type_t decode_type) 
+{
+  switch (decode_type)
+  {
+  case UNKNOWN:
+    return "UNKNOWN";
+    break;
+  case UNUSED:
+    return "UNUSED";
+    break;
+  case RC5:
+    return "RC5";
+    break;
+  case RC6:
+    return "RC6";
+    break;
+  case NEC:
+    return "NEC";
+    break;
+  case SONY:
+    return "SONY";
+    break;
+  case PANASONIC:
+    return "PANASONIC";
+    break;
+  case JVC:
+    return "JVC";
+    break;
+  case SAMSUNG:
+    return "SAMSUNG";
+    break;
+  case WHYNTER:
+    return "WHYNTER";
+    break;
+  case AIWA_RC_T501:
+    return "AIWA_RC_T501";
+    break;
+  case LG:
+    return "LG";
+    break;
+  case SANYO:
+    return "SANYO";
+    break;
+  case MITSUBISHI:
+    return "MITSUBISHI";
+    break;
+  case DISH:
+    return "DISH";
+    break;
+  case SHARP:
+    return "SHARP";
+    break;
+  case SHARP_ALT:
+    return "SHARP_ALT";
+    break;
+  case DENON:
+    return "DENON";
+    break;
+  case LEGO_PF:
+    return "LEGO_PF";
+    break;
+  case BOSEWAVE:
+    return "BOSEWAVE";
+    break;
+  case MAGIQUEST:
+    return "MAGIQUEST";
+    break;
+  }
 }
